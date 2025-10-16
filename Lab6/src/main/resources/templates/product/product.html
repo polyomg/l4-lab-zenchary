@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Form</title>
+    <style>
+        label { display: inline-block; width: 120px; margin: 4px 0; }
+        input, select { width: 240px; }
+    </style>
+    
+</head>
+<body>
+<h3>PRODUCT FORM</h3>
+
+<form th:object="${item}" th:action="@{/product}" method="post">
+    <div>
+        <label>Id</label>
+        <input th:field="*{id}" readonly />
+    </div>
+    <div>
+        <label>Name</label>
+        <input th:field="*{name}" placeholder="Product name" />
+    </div>
+    <div>
+        <label>Image</label>
+        <input th:field="*{image}" placeholder="Image URL" />
+    </div>
+    <div>
+        <label>Price</label>
+        <input th:field="*{price}" type="number" step="0.01" placeholder="0.00" />
+    </div>
+    <div>
+        <label>Create Date</label>
+        <input th:field="*{createDate}" type="date" />
+    </div>
+    <div>
+        <label>Available</label>
+        <input th:field="*{available}" type="checkbox" />
+    </div>
+    
+    <div style="margin-top: 12px;">
+        <button type="submit">Save</button>
+        <a href="/product/page">View page</a>
+        <a href="/product/sort">View sort</a>
+    </div>
+</form>
+
+</body>
+</html>
+
+
