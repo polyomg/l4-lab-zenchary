@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Sorting</title>
+</head>
+<body>
+<h3>SORTING BY: <span th:text="${field}"></span></h3>
+
+<table border="1" style="width:100%">
+    <thead>
+    <tr>
+        <th><a href="/product/sort?field=id">Id</a></th>
+        <th><a href="/product/sort?field=name">Name</a></th>
+        <th>Image</th>
+        <th><a href="/product/sort?field=price">Price</a></th>
+        <th><a href="/product/sort?field=createDate">Date</a></th>
+        <th><a href="/product/sort?field=available">Available</a></th>
+        <th>
+            <!-- Nested sort may require JPA join; supported in many cases as category.name -->
+            <a href="/product/sort?field=category.name">Category</a>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${items}">
+        <td th:text="${item.id}"></td>
+        <td th:text="${item.name}"></td>
+        <td>
+            <img th:if="${item.image != null and !#strings.isEmpty(item.image)}"
+                 th:src="@{/{file}(file=${item.image})}"
+                 alt="image" style="height:40px"/>
+            <span th:unless="${item.image != null and !#strings.isEmpty(item.image)}">N/A</span>
+        </td>
+        <td th:text="${#numbers.formatDecimal(item.price, 1, 'COMMA', 2, 'POINT')}"></td>
+        <td th:text="${#dates.format(item.createDate, 'yyyy-MM-dd')}"></td>
+        <td th:text="${item.available} ? 'Yes' : 'No'"></td>
+        <td th:text="${item.category != null ? item.category.name : 'N/A'}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
